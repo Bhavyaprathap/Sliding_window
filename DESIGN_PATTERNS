@@ -1,0 +1,20 @@
+DESIGN PATTERNS:
+1)BETTER DESIGN PATTERN IS: low coupling+high cohesion
+2)singleton: restriction to create only one object
+3)factory:uses Implements
+
+fail_safe
+modification allowed
+no exception
+works on-copy of collections
+performace slower
+memory more
+threads-safe yes
+
+faile_fast
+exception->concurrentmodificationexception
+
+
+unit-2
+bit manipulation 
+
