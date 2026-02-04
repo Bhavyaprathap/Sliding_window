@@ -1,0 +1,101 @@
+Given 3 positives numbers a, b and c. Return the minimum flips required 
+in some bits of a and b to make ( a OR b == c )
+Flip operation consists of change any single bit 1 to 0 or change the bit 
+0 to 1 in their binary representation.
+
+Example 1:
+--------------------------------
+Input: a = 2, b = 6, c = 5
+Output: 3
+Explanation: After flips a = 1 , b = 4 , c = 5 such that (a OR b == c)
+
+Sample Input 1:
+--------------------
+2 6 5
+
+Sample Output 1:
+---------------------
+3
+
+Constraint:
+------------------
+1 <= a,b,c <= 10^9
+
+
+
+2)Given a string s, reverse only all the vowels in the 
+string and return it.
+
+The vowels are 'a', 'e', 'i', 'o', and 'u', and they can 
+appear in both lower and upper cases, more than once.
+
+Sample Input-1:
+---------------
+hello
+
+Sample Output-1:
+----------------
+holle
+
+Sample Input-2:
+----------------
+Keshavmemorial
+
+Sample Output-2:
+----------------
+Kashivmomerael/*
+Write a Java program to count the number of set bits of an integer.
+
+Example 1:
+input: 7
+output: 3
+
+
+Write your java code below
+*/
+
+import java.util.*;
+class Main{
+    public static void main(String[] args){
+        Scanner sc=new Scanner(System.in);
+        int a=sc.nextInt();
+        int count=0;
+        while(a>0){
+            a = a & (a-1);
+            count++;
+        }
+        System.out.print(count);
+    }
+}
+
+
+Liam was a curious boy who loved playing with secret codes. 
+
+One day, while flipping through an old book in his grandfather’s library, he found a strange note that read:
+"To reveal the true form of a letter, flip its hidden switch!"
+
+Liam scratched his head. What could it mean?
+He decided to experiment. He took a small chalkboard and wrote down a few letters:
+H e L l O W o R l D
+He then noticed something interesting—each letter had a twin in a different case. 
+Some were uppercase, some were lowercase. "What if I could magically switch them?" he wondered.
+
+As he played with the letters, he discovered a fascinating trick. 
+If he used a simple rule—flipping just the right part of a letter’s identity—he could swap between uppercase and lowercase instantly.
+
+Excited by his discovery, Liam ran to his grandfather, who smiled and said, 
+"Ah, you’ve uncovered the XOR trick! With a simple flip, letters can change their form."
+
+Your Task:
+Liam wants to automate his discovery. 
+Can you help him write a program that takes a word and swaps the case of each letter using his newly found trick?
+
+Input Format:
+A single string containing uppercase and lowercase letters.
+
+Output Format:
+A string where each letter has been swapped to the opposite case.
+
+Example 1:
+Input =HeLLo WoRLd
+Output= hEllO wOrlD
