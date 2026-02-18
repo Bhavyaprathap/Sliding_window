@@ -1,0 +1,230 @@
+/*
+Write an SQL query to display employees whose salary is greater than the salary 
+of their respective manager.
+
+
+Tables:
+------
+salgrade ==> grade int(4) primary key, losal decimal(10,2),  hisal decimal(10,2) 
+
+
+dept==>   deptno int(2) primary key, dname varchar(50) not null, location varchar(50) not null
+
+emp ==>   empno int(4) primary key, ename varchar(50) not null,
+          job varchar(50) not null,  mgr int(4),  hiredate date,
+          sal decimal(10,2),  comm decimal(10,2),  deptno int(2)
+
+
+OUTPUT:
++-------+-------+---------+------+------------+---------+------+--------+
+| empno | ename | job     | mgr  | hiredate   | sal     | comm | deptno |
++-------+-------+---------+------+------------+---------+------+--------+
+|  7902 | FORD  | ANALYST | 7566 | 1997-12-05 | 3000.00 | NULL |     20 |
++-------+-------+---------+------+------------+---------+------+--------+
+
+
+*/
+
+use fs;
+
+select *
+from emp 
+where sal > (select max(e1.sal) from emp e1 where e1.mgr = mgr);
+
+
+
+
+
+
+2)
+/*
+Write an SQL query to find the employee(s) who earn the second highest salary 
+in the company.
+
+
+Tables:
+------
+salgrade ==> grade int(4) primary key, losal decimal(10,2),  hisal decimal(10,2) 
+
+
+dept==>   deptno int(2) primary key, dname varchar(50) not null, location varchar(50) not null
+
+emp ==>   empno int(4) primary key, ename varchar(50) not null,
+          job varchar(50) not null,  mgr int(4),  hiredate date,
+          sal decimal(10,2),  comm decimal(10,2),  deptno int(2)
+
+
+OUTPUT:
++-------+-------+---------+------+------------+---------+------+--------+
+| empno | ename | job     | mgr  | hiredate   | sal     | comm | deptno |
++-------+-------+---------+------+------------+---------+------+--------+
+|  7788 | SCOTT | ANALYST | 7566 | 1996-03-05 | 3000.00 | NULL |     20 |
++-------+-------+---------+------+------------+---------+------+--------+
+
+
+*/
+
+use fs;
+SELECT *
+FROM emp
+WHERE sal = (SELECT MAX(sal) FROM emp WHERE sal < (SELECT MAX(sal) FROM emp));
+
+
+
+
+
+
+
+
+3)/*
+Write an SQL query to list all employees who have the same job designation as 
+the employee named ALLEN.
+
+
+Tables:
+------
+salgrade ==> grade int(4) primary key, losal decimal(10,2),  hisal decimal(10,2) 
+
+
+dept==>   deptno int(2) primary key, dname varchar(50) not null, location varchar(50) not null
+
+emp ==>   empno int(4) primary key, ename varchar(50) not null,
+          job varchar(50) not null,  mgr int(4),  hiredate date,
+          sal decimal(10,2),  comm decimal(10,2),  deptno int(2)
+
+
+OUTPUT:
++-------+--------+----------+------+------------+---------+---------+--------+
+| empno | ename  | job      | mgr  | hiredate   | sal     | comm    | deptno |
++-------+--------+----------+------+------------+---------+---------+--------+
+|  7499 | ALLEN  | SALESMAN | 7698 | 1998-08-15 | 1600.00 |  300.00 |     10 |
+|  7844 | KEVIN  | SALESMAN | 7698 | 1995-06-04 | 1500.00 |    0.00 |     30 |
++-------+--------+----------+------+------------+---------+---------+--------+
+
+
+
+*/
+
+use fs;
+select e.empno,e.ename,e.job,e.mgr,e.hiredate,e.sal,e.comm,e.deptno
+from emp e
+where e.job in (select e.job from emp e where e.ename="ALLEN")
+
+
+4)
+/*
+Write an SQL query to display all details of employees whose salary is greater 
+than the salary of the employee named BLAKE.
+
+
+Tables:
+------
+salgrade ==> grade int(4) primary key, losal decimal(10,2),  hisal decimal(10,2) 
+
+
+dept==>   deptno int(2) primary key, dname varchar(50) not null, location varchar(50) not null
+
+emp ==>   empno int(4) primary key, ename varchar(50) not null,
+          job varchar(50) not null,  mgr int(4),  hiredate date,
+          sal decimal(10,2),  comm decimal(10,2),  deptno int(2)
+
+
+OUTPUT:
++-------+-------+-----------+------+------------+---------+------+--------+
+| empno | ename | job       | mgr  | hiredate   | sal     | comm | deptno |
++-------+-------+-----------+------+------------+---------+------+--------+
+|  7566 | JONES | MANAGER   | 7839 | 1995-10-31 | 2975.00 | NULL |     20 |
+|  7788 | SCOTT | ANALYST   | 7566 | 1996-03-05 | 3000.00 | NULL |     20 |
++-------+-------+-----------+------+------------+---------+------+--------+
+
+
+*/
+
+use fs;
+select e.empno,e.ename,e.job,e.mgr,e.hiredate,e.sal,e.comm,e.deptno
+from emp e
+right join dept d
+on d.deptno=e.deptno
+where e.sal > (select e.sal from emp e where e.ename="BLAKE")
+
+
+
+
+
+5)segment tree
+
+3In a futuristic smart city, a central power grid is connected to a line of N solar 
+panels (indexed 1 to N). Each panel generates a specific amount of wattage. 
+Because weather conditions change rapidly, the wattage of these panels fluctuates. 
+The grid controller needs a high-performance system to monitor these changes 
+and calculate energy yields in real-time.
+
+You must support two operations:
+1. Point Update (1 i v): Panel i changes its output. Add 'v' to its current wattage.
+   (Note: v can be negative if it gets cloudy).
+2. Range Query (2 L R): Calculate the total power produced by panels from 
+   index L to index R (inclusive).
+   
+Input Format
+------------
+Line 1: An integer N, representing the total number of solar panels.
+Line 2: N space-separated integers, representing the initial wattage of panels from index 1 to N.
+Line 3: An integer Q, the total number of operations to be performed.
+Next Q Lines: Three space-separated integers per line:
+	1 i v: Update Operation — Add v to the wattage of panel i.
+	2 L R: Query Operation — Calculate the total sum of wattage from panel L to panel R 
+	(inclusive).
+	
+Output Format:
+--------------
+For every Type 2 (Query) operation, output a single integer representing the total wattage in the 
+specified range on a new line.
+
+
+Sample Input:
+-------------
+5
+1 2 3 4 5
+3
+2 1 3
+1 2 10
+2 1 3
+
+Sample Output:
+--------------
+6
+16
+
+Explanation
+-----------
+Let's track the "Solar Grid" step by step:
+Initial State:
+Panels: [1, 2, 3, 4, 5]
+
+Operation 1:
+    2 1 3 (Range Sum Query)
+    We need the sum from index 1 to 3.
+    Calculation: 1 + 2 + 3 = 6.
+    Output: 6
+
+Operation 2:
+    1 2 10 (Point Update)
+    We add 10 to the panel at index 2.
+    Old value was 2, new value is 2 + 10 = 12.
+    Updated Panels: [1, 12, 3, 4, 5]
+
+Operation 3: 
+    2 1 3 (Range Sum Query)
+    We need the sum from index 1 to 3 again.
+    Calculation: 1 + 12 + 3 = 16.
+    Output: 16
+
+
+CONSTRAINTS
+-----------
+ 1 <= N, Q <= 10^5
+ -10^4 <= initial_wattage, v <= 10^4
+ 1 <= i, L, R <= N
+ 
+ 
+ 
