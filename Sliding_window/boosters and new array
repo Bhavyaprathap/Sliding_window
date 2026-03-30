@@ -1,0 +1,149 @@
+// A city operates N energy nodes connected in a line.
+// Each node has an energy level 𝐴𝑖, which may be positive or negative.
+
+// The control center has K power boosters. Each booster increases the energy of 
+// one node by X units.
+
+// When deploying boosters, the controller always selects the node with the lowest
+// current energy.If multiple nodes have the same lowest value, the node with the 
+// smallest index is chosen.
+
+// This process continues until all K boosters are used.
+
+// After the deployment, engineers analyze the system by looking at continuous 
+// segments of W nodes.The stability score of a segment is the sum of energies in 
+// that segment.
+// Find the maximum stability score among all such segments.
+
+// Later, the system receives Q adjustment commands.
+
+// Each command contains three integers:
+
+// idx V P
+
+// Increase the energy of node idx by V.
+// Print the total energy from node 1 to node P.
+
+// Input Format:
+// ------------
+// N K X W
+// A1 A2 ... AN
+// Q
+// idx V P
+// idx V P
+// ...
+// Output
+// ------
+// First line → maximum stability score.
+// Next Q lines → prefix energy sum from 1 to P after each update.
+
+// Example:
+// -------
+// Input=
+// 5 2 10 2
+// -5 10 2 1 8
+// 2
+// 3 5 3
+// 1 -10 5
+
+// Output=
+// 19
+// 22
+// 31
+
+// Explanation
+// -----------
+// Initial energy values = [-5, 10, 2, 1, 8]
+
+// Booster 1
+// Minimum energy = -5 (index 1)
+// -5 + 10 = 5
+
+// Array becomes -> [5, 10, 2, 1, 8]
+
+// Booster 2
+// Minimum energy = 1 (index 4)
+// 1 + 10 = 11
+
+// Array becomes -> [5, 10, 2, 11, 8]
+
+// Maximum Stability Score (W = 2)
+
+// Possible segments
+
+// [5, 10]  → 15
+// [10, 2]  → 12
+// [2, 11]  → 13
+// [11, 8]  → 19
+
+// Maximum stability score = 19
+
+// Update 1
+// idx = 3, V = 5
+// New array -> [5, 10, 7, 11, 8] -> Prefix sum up to P = 3 -> 5 + 10 + 7 = 22
+
+// Update 2
+// idx = 1, V = -10
+// New array -> [-5, 10, 7, 11, 8] -> Prefix sum up to P = 5 
+
+// -5 + 10 + 7 + 11 + 8 = 31
+import java.util.*;
+class test{
+    public static void main(String[] args){
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        int k=sc.nextInt();
+        int x=sc.nextInt();
+        int w=sc.nextInt();
+        int[] arr=new int[n];
+        for(int i=0;i<n;i++){
+            arr[i]=sc.nextInt();
+        }
+        int q=sc.nextInt();
+        while(k-- >0){
+            int minindex=0;
+            for(int i=1;i<n;i++){
+                if(arr[i]<arr[minindex]){
+                        minindex=i;
+                }    
+            }
+            arr[minindex]+=x;
+        }
+        //we will get the new updated array after the boosters are done
+        int sum1=0;
+        //sliding window
+        for(int i=0;i<w;i++){
+            sum1+=arr[i];
+        }
+
+        int max=sum1;
+        for(int i=w;i<n;i++){
+            sum1+=arr[i]-arr[i-w];
+            max=Math.max(sum1,max);
+
+
+        }
+        int sum=0;
+        System.out.println(max);
+        
+        while(q-- > 0){
+            int indx=sc.nextInt();
+            int v=sc.nextInt();
+            int p=sc.nextInt();
+
+            arr[indx-1]+=v;
+            int ps=0;
+            for(int i=0;i<p;i++){
+                ps+=arr[i];
+
+            }
+            System.out.println(ps);
+
+        }
+        
+       
+
+        
+    }
+    
+}
